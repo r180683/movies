@@ -77,17 +77,14 @@ app.get("/movies/:movieId/", async (request, response) => {
   const getMovieQuery = `SELECT * FROM movie WHERE movie_id=${movieId}`;
   const AMovie = await db.get(getMovieQuery);
   console.log(AMovie);
-  const responsiveMovie = [];
-  for (let movie of AMovie) {
-    responsiveMovie.push(convertToResponsiveMovie(movie));
-  }
+  const responsiveMovie = convertToResponsiveMovie(AMovie);
   response.send(responsiveMovie);
 });
 
 //API 4
 //Updates the details of a movie in the movie table based on the movie ID
 
-app.put("movies/:movieId/", async (request, response) => {
+app.put("/movies/:movieId/", async (request, response) => {
   const { movieId } = request.params;
   const updatedMovie = request.body;
   const { directorId, movieName, leadActor } = updatedMovie;
